@@ -1,16 +1,27 @@
 {% liquid
     # Get the featured collection
     assign featured_collection = collections['featured']
+    assign latest_collection = collections['latest']
 
     # Check if collection exists and has products
-    assign has_products = false
+    assign has_featured = false
     if featured_collection != blank and featured_collection.products.size > 0
-        assign has_products = true
+        assign has_featured = true
+    endif
+
+    assign has_latest = false
+    if latest_collection != blank and latest_collection.products.size > 0
+        assign has_latest = true
     endif
 %}
 
 <div class="px-4 ">
-    {% if has_products %}
+
+    {% if has_featured %}
+        has latest
+    {%  endif %}
+
+    {% if has_featured %}
         <!-- Products Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {% for product in featured_collection.products limit: 12 %}
@@ -122,19 +133,15 @@
     },
     {
       "type": "collection",
+      "id": "hero_collection",
+      "label": "Hero Collection",
+      "info": "Select which collection to display on the home page",
+    },
+    {
+      "type": "collection",
       "id": "featured_collection",
       "label": "Featured Collection",
       "info": "Select which collection to display on the home page"
-    },
-    {
-      "type": "range",
-      "id": "products_limit",
-      "label": "Maximum Products to Show",
-      "min": 4,
-      "max": 24,
-      "step": 4,
-      "default": 12,
-      "info": "Recommended: 12 products for optimal performance"
     }
   ],
   "presets": [
