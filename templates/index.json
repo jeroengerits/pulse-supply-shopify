@@ -18,7 +18,7 @@
       "name": "Collection",
       "settings": {
         "selected_collection": "featured",
-        "products_per_page": 3,
+        "products_per_page": 8,
         "show_collection_title": true
       }
     }
