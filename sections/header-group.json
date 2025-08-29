@@ -13,8 +13,13 @@
   "sections": {
     "header": {
       "type": "header",
-      "settings": {}
+      "settings": {
+        "show_account_link": true,
+        "show_cart_link": false
+      }
     }
   },
-  "order": ["header"]
+  "order": [
+    "header"
+  ]
 }
