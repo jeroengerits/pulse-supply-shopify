@@ -55,11 +55,6 @@
       "navigation_settings": "Navigation Settings",
       "show_accounts": "Show customer accounts",
       "show_accounts_info": "Display account link in header"
-    },
-    "footer": {
-      "contact_us": "contact",
-      "privacy": "privacy",
-      "terms": "terms"
     }
   },
   "gift_card": {
