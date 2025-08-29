@@ -1,8 +1,13 @@
-<footer class="flex flex-row justify-between gap-4 p-6">
-  <div class="text-sm font-inter opacity-50">
-    &copy;
-    pulse.supply
-  </div>
+<footer class="flex flex-row justify-start items-center gap-4 p-6">
+    <div class="text-sm font-medium opacity-50">
+        &copy;
+        pulse.supply
+    </div>
+    <div class="text-sm font-inter text-blue-800 opacity-50">
+        <a href="{{ pages.contact.url }}" class="hover:underline">
+            {{ 'general.footer.contact_us' | t }}
+        </a>
+    </div>
 </footer>
 
 {% schema %}

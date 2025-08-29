@@ -16,5 +16,7 @@
       "settings": {}
     }
   },
-  "order": ["footer"]
+  "order": [
+    "footer"
+  ]
 }

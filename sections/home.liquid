@@ -1,106 +1,113 @@
 {% liquid
-  # Get the featured collection
-  assign featured_collection = collections['featured']
-  
-  # Check if collection exists and has products
-  assign has_products = false
-  if featured_collection != blank and featured_collection.products.size > 0
-    assign has_products = true
-  endif
+    # Get the featured collection
+    assign featured_collection = collections['featured']
+
+    # Check if collection exists and has products
+    assign has_products = false
+    if featured_collection != blank and featured_collection.products.size > 0
+        assign has_products = true
+    endif
 %}
 
 <div class="px-4 py-8">
-  {% if has_products %}
-    <!-- Products Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      {% for product in featured_collection.products limit: 12 %}
-        {% liquid
-          assign product_image = product.featured_image
-          assign image_url = product_image | image_url: width: 400, height: 400, crop: 'center'
-          assign image_alt = product.title | escape
-        %}
-        
-        <article class="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
-          <a href="{{ product.url }}" class="block w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-            <!-- Product Image -->
-            <div class="aspect-square overflow-hidden">
-              {% if product_image %}
-                <img 
-                  src="{{ image_url }}" 
-                  width="400"
-                  height="400"
-                  alt="{{ image_alt }}"
-                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                  loading="lazy"
-                  decoding="async"
-                >
-              {% else %}
-                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
-                  <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-                  </svg>
-                </div>
-              {% endif %}
-            </div>
+    {% if has_products %}
+        <!-- Products Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            {% for product in featured_collection.products limit: 12 %}
+                {% liquid
+                    assign product_image = product.featured_image
+                    assign image_url = product_image | image_url: width: 400, height: 400, crop: 'center'
+                    assign image_alt = product.title | escape
+                %}
 
-            <!-- Product Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              <div class="absolute bottom-0 left-0 right-0 p-4">
-                <h3 class="text-white text-lg font-semibold leading-tight line-clamp-2">
-                  {{ product.title | escape }}
-                </h3>
-                
-                <!-- Price -->
-                <div class="mt-2">
+                <article
+                        class="group relative bg-white rounded-xl overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+                    <a href="{{ product.url }}"
+                       class="block w-full h-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                        <!-- Product Image -->
+                        <div class="aspect-square overflow-hidden">
+                            {% if product_image %}
+                                <img
+                                        src="{{ image_url }}"
+                                        width="400"
+                                        height="400"
+                                        alt="{{ image_alt }}"
+                                        class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                                        loading="lazy"
+                                        decoding="async"
+                                >
+                            {% else %}
+                                <div class="w-full h-full bg-gray-100 flex items-center justify-center">
+                                    <svg class="w-16 h-16 text-gray-400" fill="none" stroke="currentColor"
+                                         viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                                              d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                            {% endif %}
+                        </div>
+
+                        <!-- Product Overlay -->
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                            <div class="absolute bottom-0 left-0 right-0 p-4">
+                                <h3 class="text-white text-lg font-semibold leading-tight line-clamp-2">
+                                    {{ product.title | escape }}
+                                </h3>
+
+                                <!-- Price -->
+                                <div class="mt-2">
                   <span class="text-white font-bold text-lg">
                     {{ product.price | money }}
                   </span>
-                  {% if product.compare_at_price > product.price %}
-                    <span class="text-gray-200 line-through ml-2">
+                                    {% if product.compare_at_price > product.price %}
+                                        <span class="text-gray-200 line-through ml-2">
                       {{ product.compare_at_price | money }}
                     </span>
-                  {% endif %}
-                </div>
-              </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            {% endfor %}
+        </div>
+
+        <!-- View All Button -->
+        {% if featured_collection.products.size > 12 %}
+            <div class="text-center mt-8">
+                <a href="{{ featured_collection.url }}"
+                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
+                    View All Products
+                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                    </svg>
+                </a>
             </div>
-          </a>
-        </article>
-      {% endfor %}
-    </div>
+        {% endif %}
 
-    <!-- View All Button -->
-    {% if featured_collection.products.size > 12 %}
-      <div class="text-center mt-8">
-        <a href="{{ featured_collection.url }}" class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-          View All Products
-          <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-          </svg>
-        </a>
-      </div>
+    {% else %}
+        <!-- Empty State -->
+        <div class="text-center py-20">
+            <div class="max-w-md mx-auto">
+                <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
+                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
+                </svg>
+                <h2 class="text-2xl font-bold text-gray-900 mb-2">No Products Found</h2>
+                <p class="text-gray-600 mb-6">
+                    {% if featured_collection == blank %}
+                        The "featured" collection doesn't exist. Please create it or update the collection handle in this section.
+                    {% else %}
+                        The "featured" collection has no products. Add some products to see them here.
+                    {% endif %}
+                </p>
+                <a href="/admin/collections"
+                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                    Manage Collections
+                </a>
+            </div>
+        </div>
     {% endif %}
-
-  {% else %}
-    <!-- Empty State -->
-    <div class="text-center py-20">
-      <div class="max-w-md mx-auto">
-        <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-        </svg>
-        <h2 class="text-2xl font-bold text-gray-900 mb-2">No Products Found</h2>
-        <p class="text-gray-600 mb-6">
-          {% if featured_collection == blank %}
-            The "featured" collection doesn't exist. Please create it or update the collection handle in this section.
-          {% else %}
-            The "featured" collection has no products. Add some products to see them here.
-          {% endif %}
-        </p>
-        <a href="/admin/collections" class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200">
-          Manage Collections
-        </a>
-      </div>
-    </div>
-  {% endif %}
 </div>
 
 {% schema %}
