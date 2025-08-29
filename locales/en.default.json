@@ -60,5 +60,31 @@
     "submit": "Search",
     "no_results_html": "No results found for {{ terms }}",
     "results_for_html": "{{ count }} results found for {{ terms }}"
+  },
+  "sections": {
+    "home": {
+      "hero": {
+        "subtitle": "Spring / Summer Collection 2024",
+        "title": "Get up to 30% Off",
+        "subtitle2": "New Arrivals",
+        "cta": "Shop Now"
+      },
+      "categories": {
+        "womens": "WOMEN'S",
+        "accessories": "ACCESSORIES",
+        "mens": "MEN'S"
+      },
+      "products": {
+        "title": "Featured Products",
+        "subtitle": "Discover our latest arrivals and best-selling items",
+        "view_all": "View All Products"
+      },
+      "empty": {
+        "title": "No Products Found",
+        "no_collection": "The \"featured\" collection doesn't exist. Please create it or update the collection handle in this section.",
+        "no_products": "The \"featured\" collection has no products. Add some products to see them here.",
+        "manage": "Manage Collections"
+      }
+    }
   }
 }

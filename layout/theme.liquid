@@ -9,6 +9,22 @@
     {% # Custom Inter Font CSS %}
     {{ 'inter-font.css' | asset_url | stylesheet_tag }}
 
+    {% # Custom Scrollbar Styles %}
+    <style>
+      .scrollbar-hide {
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+        scrollbar-width: none;  /* Firefox */
+      }
+      .scrollbar-hide::-webkit-scrollbar {
+        display: none;  /* Safari and Chrome */
+      }
+      
+      /* Smooth scrolling for horizontal scroll */
+      .overflow-x-auto {
+        scroll-behavior: smooth;
+      }
+    </style>
+
     {% # Tailwind CSS v4 CDN %}
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp" defer></script>
 
