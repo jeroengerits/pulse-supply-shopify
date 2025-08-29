@@ -14,18 +14,23 @@ This Shopify theme has been successfully updated to use **Tailwind CSS v4** via 
 Tailwind CSS v4 is already installed and configured in this theme via the global CDN. The script tag is included in `layout/theme.liquid`:
 
 ```html
-<script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp" defer></script>
+<script
+  src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp"
+  defer
+></script>
 ```
 
 ## 🔧 Configuration
 
 ### CDN Plugins Included
+
 - **forms** - Form styling utilities
 - **typography** - Rich text content styling
 - **aspect-ratio** - Aspect ratio utilities
 - **line-clamp** - Text truncation utilities
 
 ### Performance Optimizations
+
 - Script tag includes `defer` attribute for non-blocking loading
 - CDN provides optimized CSS for production use
 - Automatic purging of unused styles
@@ -33,24 +38,29 @@ Tailwind CSS v4 is already installed and configured in this theme via the global
 ## 🎨 Usage Examples
 
 ### Basic Layout
+
 ```html
 <div class="container mx-auto px-4 py-8">
-  <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">
-    Your Title
-  </h1>
+  <h1 class="text-4xl font-bold text-gray-900 mb-8 text-center">Your Title</h1>
 </div>
 ```
 
 ### Responsive Grid
+
 ```html
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+<div
+  class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+>
   <!-- Grid items -->
 </div>
 ```
 
 ### Card Component
+
 ```html
-<div class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
+<div
+  class="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300"
+>
   <div class="p-4">
     <h3 class="text-lg font-semibold text-gray-900 mb-2">Card Title</h3>
     <p class="text-gray-600">Card content</p>
@@ -59,8 +69,11 @@ Tailwind CSS v4 is already installed and configured in this theme via the global
 ```
 
 ### Buttons
+
 ```html
-<button class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200">
+<button
+  class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200"
+>
   Click Me
 </button>
 ```
@@ -103,16 +116,20 @@ The theme uses Tailwind's default color palette:
 ## 📁 Updated Files
 
 ### Layout
+
 - `layout/theme.liquid` - Added Tailwind CDN script
 
 ### Sections
+
 - `sections/collection.liquid` - Refactored with Tailwind classes
 - `sections/home.liquid` - Minimal home section showcasing header and footer
 
 ### Templates
+
 - `templates/index.json` - Updated to use home section
 
 ### Locales
+
 - `locales/en.default.json` - Added missing translation keys
 
 ## 🚀 Benefits of Tailwind CSS v4
