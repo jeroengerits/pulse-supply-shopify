@@ -1,71 +1,4 @@
-{% liquid
-    # Get the featured collection
-    assign featured_collection = collections['featured']
-    assign latest_collection = collections['latest']
-    assign sold_out_collection = collections['sold-out']
-
-    # Check if collection exists and has products
-    assign has_featured = false
-    if featured_collection != blank and featured_collection.products.size > 0
-        assign has_featured = true
-    endif
-
-    assign has_latest = false
-    if latest_collection != blank and latest_collection.products.size > 0
-        assign has_latest = true
-    endif
-
-    assign has_sold_out = false
-     if sold_out_collection != blank and sold_out_collection.products.size > 0
-        assign has_sold_out = true
-    endif
-%}
-
-<div class="px-6 pt-3 pb-12 space-y-6">
-
-    {% if section.settings.show_latest and has_latest %}
-         <!-- Products Grid -->
-         <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4 ">Latest</h1>
-         <div class="grid grid-cols-1 lg:grid-cols-2  gap-6">
-            {% for product in latest_collection.products limit: 12 %}
-              {% render 'product-card', 
-                product: product,
-                image_width: 800,
-                image_height: 400
-              %}
-            {% endfor %}
-        </div>
-
-    {%  endif %}
-
-    {% if section.settings.show_featured and has_featured %}
-        <!-- Products Grid -->
-        <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4 ">Featured</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {% for product in featured_collection.products limit: 12 %}
-              {% render 'product-card', 
-                product: product,
-                image_width: 400,
-                image_height: 300
-              %}
-            {% endfor %}
-        </div>
-    {% endif %}
-
-
-    {% if section.settings.show_sold_out and has_sold_out %}
-        <!-- Products Grid -->
-        <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4 ">Sold Out</h1>
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {% for product in sold_out_collection.products limit: 12 %}
-              {% render 'product-card',
-                product: product,
-                image_width: 400,
-                image_height: 300
-              %}
-            {% endfor %}
-        </div>
-    {% endif %}
+<div class="px-6 pt-3 ">
 
 </div>
 
@@ -74,25 +7,5 @@
   "name": "Home",
   "tag": "section",
   "class": "home",
-  "settings": [
-    {
-      "type": "checkbox",
-      "id": "show_latest",
-      "label": "Show Latest",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_featured",
-      "label": "Show Featured",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_sold_out",
-      "label": "Show Sold Out",
-      "default": true
-    }
-  ]
 }
 {% endschema %}
