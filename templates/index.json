@@ -11,8 +11,13 @@
   "sections": {
     "main": {
       "type": "home",
-      "settings": {}
+      "settings": {
+        "featured_collection": "featured",
+        "products_limit": 4
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
