@@ -11,9 +11,20 @@
   "sections": {
     "main": {
       "type": "home",
+      "settings": {}
+    },
+    "collection_HrYyNC": {
+      "type": "collection",
+      "name": "Collection",
+      "settings": {
+        "selected_collection": "featured",
+        "products_per_page": 3,
+        "show_collection_title": true
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "collection_HrYyNC"
   ]
 }
