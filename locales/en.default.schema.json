@@ -29,6 +29,7 @@
     "layout": "Layout",
     "main": "Main",
     "page": "Page",
+    "longtext": "Longtext",
     "password": "Password",
     "primary": "Primary",
     "product": "Product",
