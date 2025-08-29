@@ -32,9 +32,12 @@
         </div>
     </div>
 </header>
+
 {% schema %}
 {
   "name": "Header",
+  "tag": "section",
+  "class": "section-header",
   "settings": [
     {
       "type": "checkbox",
@@ -47,6 +50,11 @@
       "id": "show_cart_link",
       "label": "Show Cart Link",
       "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Header"
     }
   ]
 }
