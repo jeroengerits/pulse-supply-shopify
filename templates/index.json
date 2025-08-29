@@ -13,7 +13,7 @@
       "type": "home",
       "settings": {
         "featured_collection": "featured",
-        "products_limit": 4
+        "products_limit": 12
       }
     }
   },
