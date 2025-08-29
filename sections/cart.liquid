@@ -2,36 +2,328 @@
   This section is used in the cart template to render /cart page with an
   overview of the items in customer's cart.
 
-  https://shopify.dev/docs/storefronts/themes/architecture/templates/cart
+  https://shopify.dev/docs/storefronts/themes/architecture/templates/product
 {% endcomment %}
 
-<h1>{{ 'cart.title' | t }}</h1>
+{% liquid
+  assign section_id = section.settings.custom_id | default: section.id
+%}
 
-<form action="{{ routes.cart_url }}" method="post">
-    <table>
-        {% for item in cart.items %}
-            <tr>
-                <td>
-                    {% render 'image', image: item.image, url: item.url %}
-                </td>
-                <td>
-                    <p>{{ item.product.title }}</p>
-                    {{ 'cart.remove' | t | link_to: item.url_to_remove }}
-                </td>
-                <td>
-                    <input type="text" name="updates[]" value="{{ item.quantity }}">
-                    <input type="submit" value="{{ 'cart.update' | t }}">
-                </td>
-            </tr>
-        {% endfor %}
-    </table>
+<section
+  id="{{ section_id }}"
+  class="py-8 md:py-16"
+  style="
+    --section-padding-top: {{ section.settings.padding_top }}px;
+    --section-padding-bottom: {{ section.settings.padding_bottom }}px;
+  "
+>
+    <form action="{{ routes.cart_url }}" method="post">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Cart Header -->
+    <div class="mb-8">
+      <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+        {{ 'cart.title' | t }}
+      </h1>
+      {% if cart.item_count > 0 %}
+        <p class="text-gray-600">
+          {{ cart.item_count }} item{% if cart.item_count != 1 %}s{% endif %} in your cart
+        </p>
+      {% endif %}
+    </div>
 
-    <input type="submit" name="checkout" value="{{ 'cart.checkout' | t }}">
+    {% if cart.item_count > 0 %}
+      <!-- Cart Items -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <!-- Cart Items List -->
+        <div class="lg:col-span-2">
+          <div class="bg-white rounded-xl border border-gray-200 overflow-hidden">
+            <div class="p-6 border-b border-gray-200">
+              <h2 class="text-lg font-semibold text-gray-900">Cart items</h2>
+            </div>
+            
+            <div class="divide-y divide-gray-200">
+              {% for item in cart.items %}
+                <div class="p-6">
+                  <div class="flex items-start gap-4">
+                    <!-- Product Image -->
+                    <div class="flex-shrink-0">
+                      <div class="w-20 h-20 rounded-lg overflow-hidden bg-gray-50 border border-gray-200">
+                        {% if item.image %}
+                          {% render 'image', 
+                            image: item.image, 
+                            class: 'w-full h-full object-cover',
+                            loading: 'lazy'
+                          %}
+                        {% else %}
+                          <div class="w-full h-full flex items-center justify-center text-gray-400">
+                            <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+                              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z"/>
+                              <path d="M14.14 11.86l-3 3.87L9 13.14 6 17h12l-3.86-5.14z"/>
+                            </svg>
+                          </div>
+                        {% endif %}
+                      </div>
+                    </div>
+
+                    <!-- Product Details -->
+                    <div class="flex-1 min-w-0">
+                      <div class="flex items-start justify-between">
+                        <div class="flex-1">
+                          <h3 class="text-base font-medium text-gray-900 mb-1">
+                            <a href="{{ item.url }}" class="hover:text-blue-600 transition-colors duration-200">
+                              {{ item.product.title }}
+                            </a>
+                          </h3>
+                          
+                          {% if item.variant.title != 'Default Title' %}
+                            <p class="text-sm text-gray-500 mb-2">{{ item.variant.title }}</p>
+                          {% endif %}
+                          
+                          <div class="flex items-center gap-4">
+                            <p class="text-lg font-semibold text-gray-900">
+                              {{ item.final_price | money }}
+                            </p>
+                            {% if item.original_price > item.final_price %}
+                              <p class="text-sm text-gray-500 line-through">
+                                {{ item.original_price | money }}
+                              </p>
+                            {% endif %}
+                          </div>
+                        </div>
+
+                        <!-- Remove Button -->
+                        <div class="ml-4">
+                          <a 
+                            href="{{ item.url_to_remove }}" 
+                            class="text-red-600 hover:text-red-800 transition-colors duration-200"
+                            aria-label="Remove {{ item.product.title }}"
+                          >
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                            </svg>
+                          </a>
+                        </div>
+                      </div>
+
+                      <!-- Quantity Selector -->
+                      <div class="mt-4 flex items-center gap-4">
+                        <label for="quantity-{{ item.key }}" class="text-sm font-medium text-gray-700">
+                          Quantity:
+                        </label>
+                        <div class="flex items-center border border-gray-300 rounded-lg overflow-hidden bg-white">
+                          <button 
+                            type="button" 
+                            class="w-8 h-8 bg-gray-50 hover:bg-gray-100 active:bg-gray-200 border-none text-gray-600 transition-colors duration-200 flex items-center justify-center"
+                            data-quantity-decrease
+                            data-item-key="{{ item.key }}"
+                            aria-label="Decrease quantity"
+                          >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                            </svg>
+                          </button>
+                          <input 
+                            type="number" 
+                            id="quantity-{{ item.key }}"
+                            name="updates[]" 
+                            value="{{ item.quantity }}" 
+                            min="1" 
+                            class="w-12 h-8 text-center border-none bg-white text-gray-900 text-sm focus:outline-none"
+                            data-quantity-input
+                            data-item-key="{{ item.key }}"
+                          >
+                          <button 
+                            type="button" 
+                            class="w-8 h-8 bg-gray-50 hover:bg-gray-100 active:bg-gray-200 border-none text-gray-600 transition-colors duration-200 flex items-center justify-center"
+                            data-quantity-increase
+                            data-item-key="{{ item.key }}"
+                            aria-label="Increase quantity"
+                          >
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+
+              <!-- Update Cart Button -->
+              <div class="p-6 bg-gray-50">
+                <button 
+                  type="submit" 
+                  class="w-full bg-gray-600 hover:bg-gray-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors duration-200"
+                >
+                  {{ 'cart.update' | t }}
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Summary -->
+        <div class="lg:col-span-1">
+          <div class="bg-white rounded-xl border border-gray-200 p-6 sticky top-8">
+            <h2 class="text-lg font-semibold text-gray-900 mb-6">Order summary</h2>
+            
+            <!-- Subtotal -->
+            <div class="space-y-4 mb-6">
+              <div class="flex justify-between text-sm text-gray-600">
+                <span>Subtotal</span>
+                <span>{{ cart.items_subtotal_price | money }}</span>
+              </div>
+              
+              {% if cart.cart_level_discount_applications.size > 0 %}
+                {% for discount in cart.cart_level_discount_applications %}
+                  <div class="flex justify-between text-sm text-green-600">
+                    <span>Discount ({{ discount.title }})</span>
+                    <span>-{{ discount.total_allocated_amount | money }}</span>
+                  </div>
+                {% endfor %}
+              {% endif %}
+              
+              {% if cart.taxes_included %}
+                <div class="flex justify-between text-sm text-gray-500">
+                  <span>Taxes included</span>
+                </div>
+              {% endif %}
+            </div>
+
+            <!-- Total -->
+            <div class="border-t border-gray-200 pt-4 mb-6">
+              <div class="flex justify-between text-lg font-semibold text-gray-900">
+                <span>Total</span>
+                <span>{{ cart.total_price | money }}</span>
+              </div>
+            </div>
+
+            <!-- Checkout Button -->
+            <button 
+              type="submit" 
+              name="checkout" 
+              class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-4 px-6 rounded-lg transition-all duration-200 hover:transform hover:-translate-y-0.5 hover:shadow-lg"
+            >
+              {{ 'cart.checkout' | t }}
+            </button>
+
+            <!-- Continue Shopping -->
+            <div class="mt-4 text-center">
+              <a 
+                href="{{ routes.all_products_collection_url }}" 
+                class="text-blue-600 hover:text-blue-800 text-sm font-medium transition-colors duration-200"
+              >
+                Continue shopping
+              </a>
+            </div>
+
+            <!-- Shipping Info -->
+            {% if section.settings.show_shipping_info %}
+              <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                <div class="flex items-start gap-3">
+                  <svg class="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd"/>
+                  </svg>
+                  <div>
+                    <h4 class="text-sm font-medium text-blue-900">Free shipping</h4>
+                    <p class="text-sm text-blue-700 mt-1">Orders over $50 ship free</p>
+                  </div>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <!-- Empty Cart -->
+      <div class="text-center py-16">
+        <div class="mx-auto w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mb-6">
+          <svg class="w-12 h-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/>
+          </svg>
+        </div>
+        <h2 class="text-2xl font-semibold text-gray-900 mb-4">Your cart is empty</h2>
+        <p class="text-gray-600 mb-8 max-w-md mx-auto">
+          Looks like you haven't added any items to your cart yet. Start shopping to fill it up!
+        </p>
+        <a 
+          href="{{ routes.all_products_collection_url }}" 
+          class="inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg transition-colors duration-200"
+        >
+          Start shopping
+        </a>
+      </div>
+    {% endif %}
+  </div>
 </form>
+</section>
+
+{% javascript %}
+document.addEventListener('DOMContentLoaded', function() {
+  // Quantity selector functionality for cart items
+  const quantityInputs = document.querySelectorAll('[data-quantity-input]');
+  const decreaseBtns = document.querySelectorAll('[data-quantity-decrease]');
+  const increaseBtns = document.querySelectorAll('[data-quantity-increase]');
+
+  // Add event listeners to all quantity controls
+  decreaseBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const itemKey = this.dataset.itemKey;
+      const input = document.querySelector(`[data-quantity-input][data-item-key="${itemKey}"]`);
+      if (input) {
+        const currentValue = parseInt(input.value);
+        if (currentValue > 1) {
+          input.value = currentValue - 1;
+          // Trigger form submission to update cart
+          input.closest('form').submit();
+        }
+      }
+    });
+  });
+
+  increaseBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+      const itemKey = this.dataset.itemKey;
+      const input = document.querySelector(`[data-quantity-input][data-item-key="${itemKey}"]`);
+      if (input) {
+        const currentValue = parseInt(input.value);
+        input.value = currentValue + 1;
+        // Trigger form submission to update cart
+        input.closest('form').submit();
+      }
+    });
+  });
+
+  // Auto-submit form when quantity changes
+  quantityInputs.forEach(input => {
+    input.addEventListener('change', function() {
+      // Add a small delay to allow user to finish typing
+      setTimeout(() => {
+        this.closest('form').submit();
+      }, 500);
+    });
+  });
+});
+{% endjavascript %}
 
 {% schema %}
 {
-  "name": "t:general.cart",
-  "settings": []
+  "name": "Cart",
+  "tag": "section",
+  "class": "section-cart",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_shipping_info",
+      "label": "Show shipping information",
+      "default": true
+    }
+  ],
+  "presets": [
+    {
+      "name": "Cart"
+    }
+  ]
 }
 {% endschema %}

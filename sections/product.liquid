@@ -186,7 +186,7 @@
 
         <!-- Product Meta -->
         <div class="pt-8 border-t border-gray-200 space-y-4">
-          {% if product.vendor and section.settings.show_vendor %}
+          {% if product.vendor != blank and section.settings.show_vendor %}
             <div class="flex items-start gap-2">
               <span class="text-sm font-semibold text-gray-700 min-w-[80px]">Vendor:</span>
               <span class="text-sm text-gray-600">{{ product.vendor }}</span>
