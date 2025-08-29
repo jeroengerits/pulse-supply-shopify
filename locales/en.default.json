@@ -57,7 +57,9 @@
       "show_accounts_info": "Display account link in header"
     },
     "footer": {
-      "contact_us": "contact us"
+      "contact_us": "contact us",
+      "privacy": "privacy policy",
+      "terms": "terms of service"
     }
   },
   "gift_card": {
