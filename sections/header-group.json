@@ -9,7 +9,7 @@
  */
 {
   "type": "header",
-  "name": "t:general.header",
+  "name": "t:general.navigation",
   "sections": {
     "header": {
       "type": "header",
