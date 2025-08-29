@@ -17,7 +17,7 @@
 
 <div class="px-4 space-y-6">
 
-    {% if has_latest %}
+    {% if section.settings.show_latest and has_latest %}
          <!-- Products Grid -->
         <div class="grid grid-cols-1 lg:grid-cols-2  gap-6">
             {% for product in latest_collection.products limit: 12 %}
@@ -79,44 +79,9 @@
             {% endfor %}
         </div>
 
-        <!-- View All Button -->
-        {% if featured_collection.products.size > 12 %}
-            <div class="text-center mt-8">
-                <a href="{{ featured_collection.url }}"
-                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    View All Products
-                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </a>
-            </div>
-        {% endif %}
-
-    {% else %}
-        <!-- Empty State -->
-        <div class="text-center py-20">
-            <div class="max-w-md mx-auto">
-                <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                </svg>
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">No Products Found</h2>
-                <p class="text-gray-600 mb-6">
-                    {% if featured_collection == blank %}
-                        The "featured" collection doesn't exist. Please create it or update the collection handle in this section.
-                    {% else %}
-                        The "featured" collection has no products. Add some products to see them here.
-                    {% endif %}
-                </p>
-                <a href="/admin/collections"
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200">
-                    Manage Collections
-                </a>
-            </div>
-        </div>
     {%  endif %}
 
-    {% if has_featured %}
+    {% if section.settings.show_featured and has_featured %}
         <!-- Products Grid -->
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
             {% for product in featured_collection.products limit: 12 %}
@@ -177,42 +142,6 @@
                 </article>
             {% endfor %}
         </div>
-
-        <!-- View All Button -->
-        {% if featured_collection.products.size > 12 %}
-            <div class="text-center mt-8">
-                <a href="{{ featured_collection.url }}"
-                   class="inline-flex items-center px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2">
-                    View All Products
-                    <svg class="ml-2 w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
-                    </svg>
-                </a>
-            </div>
-        {% endif %}
-
-    {% else %}
-        <!-- Empty State -->
-        <div class="text-center py-20">
-            <div class="max-w-md mx-auto">
-                <svg class="w-24 h-24 text-gray-300 mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1"
-                          d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"></path>
-                </svg>
-                <h2 class="text-2xl font-bold text-gray-900 mb-2">No Products Found</h2>
-                <p class="text-gray-600 mb-6">
-                    {% if featured_collection == blank %}
-                        The "featured" collection doesn't exist. Please create it or update the collection handle in this section.
-                    {% else %}
-                        The "featured" collection has no products. Add some products to see them here.
-                    {% endif %}
-                </p>
-                <a href="/admin/collections"
-                   class="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition-colors duration-200">
-                    Manage Collections
-                </a>
-            </div>
-        </div>
     {% endif %}
 </div>
 
@@ -222,6 +151,18 @@
   "tag": "section",
   "class": "home",
   "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_latest",
+      "label": "Show Latest",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_featured",
+      "label": "Show Featured",
+      "default": true
+    }
   ],
   "presets": [
     {
