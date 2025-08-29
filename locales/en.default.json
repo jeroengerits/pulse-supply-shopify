@@ -55,6 +55,9 @@
       "navigation_settings": "Navigation Settings",
       "show_accounts": "Show customer accounts",
       "show_accounts_info": "Display account link in header"
+    },
+    "footer": {
+      "brand_name": "pulse.supply"
     }
   },
   "gift_card": {

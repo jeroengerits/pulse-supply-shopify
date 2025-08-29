@@ -1,31 +1,31 @@
 <footer class="flex flex-row justify-start items-center gap-4 p-6 font-inter">
     {% if section.settings.show_copyright %}
-    <div class="text-md font-medium">
-        <a href="{{ routes.root_url }}" class="opacity-75 hover:opacity-100 transition-all">
-          &copy; {{ 'general.header.brand_name' | t }}
-        </a>
-    </div>
+        <div class="text-base font-normal">
+            <a href="{{ routes.root_url }}" class="opacity-50 hover:opacity-100 transition-all">
+                &copy; {{ 'general.footer.brand_name' | t }}
+            </a>
+        </div>
     {% endif %}
     {% if section.settings.show_contact_us %}
-    <div class="text-sm font-normal">
-      <a href="{{ pages.contact.url }}" class="opacity-50 hover:opacity-100 transition-all">
-          contact
-      </a>
-    </div>
+        <div class="text-sm font-normal">
+            <a href="{{ pages.contact.url }}" class="opacity-50 hover:opacity-100 transition-all">
+                contact
+            </a>
+        </div>
     {% endif %}
     {% if section.settings.show_privacy %}
-    <div class="text-sm font-normal">
-        <a href="{{ pages.privacy.url }}" class="opacity-50 hover:opacity-100 transition-all">
-          privacy
-        </a>
-    </div>
+        <div class="text-sm font-normal">
+            <a href="{{ pages.privacy.url }}" class="opacity-50 hover:opacity-100 transition-all">
+                privacy
+            </a>
+        </div>
     {% endif %}
     {% if section.settings.show_terms %}
-    <div class="text-sm font-normal">
-      <a href="{{ pages.terms.url }}" class="opacity-50 hover:opacity-100 transition-all">
-          terms
-      </a>
-    </div>
+        <div class="text-sm font-normal">
+            <a href="{{ pages.terms.url }}" class="opacity-50 hover:opacity-100 transition-all">
+                terms
+            </a>
+        </div>
     {% endif %}
 </footer>
 

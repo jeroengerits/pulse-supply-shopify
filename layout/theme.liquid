@@ -1,17 +1,17 @@
 <!doctype html>
 <html lang="{{ request.locale.iso_code }}">
 <head>
-    {% # Google Fonts - Inter  %}
+    {% # Google Fonts - Inter   %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap"
           rel="stylesheet">
 
-    {% # Custom Inter Font CSS  %}
+    {% # Custom Inter Font CSS   %}
     {{ 'inter-font.css' | asset_url | stylesheet_tag }}
 
 
-    {% # Custom Scrollbar Styles  %}
+    {% # Custom Scrollbar Styles   %}
     <style>
         .scrollbar-hide {
             -ms-overflow-style: none; /* Internet Explorer 10+ */
@@ -28,10 +28,10 @@
         }
     </style>
 
-    {% # Tailwind CSS v4 CDN  %}
+    {% # Tailwind CSS v4 CDN   %}
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp" defer></script>
 
-    {% # Social, title, etc.  %}
+    {% # Social, title, etc.   %}
     {% render 'meta-tags' %}
 
     {{ content_for_header }}
