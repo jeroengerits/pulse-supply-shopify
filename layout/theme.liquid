@@ -10,7 +10,6 @@
     {% # Custom Inter Font CSS   %}
     {{ 'inter-font.css' | asset_url | stylesheet_tag }}
 
-
     {% # Custom Scrollbar Styles   %}
     <style>
         .scrollbar-hide {
@@ -37,7 +36,7 @@
     {{ content_for_header }}
 </head>
 
-<body>
+<body class="bg-neutral-100">
 {% sections 'header-group' %}
 
 {{ content_for_layout }}
