@@ -9,10 +9,10 @@
  */
 {
   "type": "header",
-  "name": "t:general.navigation",
+  "name": "t:general.header",
   "sections": {
-    "header": {
-      "type": "header",
+    "navigation": {
+      "type": "navigation",
       "settings": {
         "show_account_link": true,
         "show_cart_link": true
@@ -20,6 +20,6 @@
     }
   },
   "order": [
-    "header"
+    "navigation"
   ]
 }
