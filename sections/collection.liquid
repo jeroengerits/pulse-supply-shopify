@@ -5,11 +5,38 @@
   https://shopify.dev/docs/storefronts/themes/architecture/templates/collection
 {% endcomment %}
 
+{% liquid
+  assign display_collection = section.settings.selected_collection | default: collection
+  assign products_per_page = section.settings.products_per_page | default: 24
+%}
+
 <div class="px-6 pt-3">
-  <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4 ">{{ collection.title }}</h1>
+  {% if section.settings.show_collection_title %}
+    <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4">{{ display_collection.title }}</h1>
+  {% endif %}
+
+  {% if section.settings.show_collection_description and display_collection.description != blank %}
+    <div class="mb-6">
+      <p class="text-neutral-600 leading-relaxed">{{ display_collection.description }}</p>
+    </div>
+  {% endif %}
+
+  {% if section.settings.show_collection_image and display_collection.image %}
+    <div class="mb-6">
+      <img 
+        src="{{ display_collection.image | image_url: width: 800, height: 400, crop: 'center' }}"
+        alt="{{ display_collection.title | escape }}"
+        class="w-full h-64 object-cover rounded-lg"
+        width="800"
+        height="400"
+        loading="lazy"
+      >
+    </div>
+  {% endif %}
+
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    {% paginate collection.products by 24 %}
-      {% for product in collection.products %}
+    {% paginate display_collection.products by products_per_page %}
+      {% for product in display_collection.products %}
         {% render 'product-card', 
           product: product,
           image_width: 400,
@@ -28,6 +55,42 @@
   "name": "t:general.collection",
   "tag": "section",
   "class": "section-collection",
+  "settings": [
+    {
+      "type": "collection",
+      "id": "selected_collection",
+      "label": "Collection to display",
+      "info": "Select which collection to show. Leave empty to use the current page's collection."
+    },
+    {
+      "type": "range",
+      "id": "products_per_page",
+      "label": "Products per page",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24,
+      "info": "Number of products to show per page"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_title",
+      "label": "Show collection title",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_description",
+      "label": "Show collection description",
+      "default": false
+    },
+    {
+      "type": "checkbox",
+      "id": "show_collection_image",
+      "label": "Show collection image",
+      "default": false
+    }
+  ],
   "presets": [
     {
       "name": "Collection"
