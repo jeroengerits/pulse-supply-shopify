@@ -15,18 +15,13 @@
     <h1 class="text-sm tracking-widest mx-1 uppercase font-normal text-neutral-500 mb-4">{{ display_collection.title }}</h1>
   {% endif %}
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-    {% paginate display_collection.products by products_per_page %}
-      {% for product in display_collection.products %}
+      {% for product in display_collection.products limit: products_per_page %}
         {% render 'product-card', 
           product: product,
           image_width: 400,
           image_height: 300
         %}
       {% endfor %}
-      <div class="col-span-full mt-8">
-        {{ paginate | default_pagination }}
-      </div>
-    {% endpaginate %}
   </div>
 </div>
 
