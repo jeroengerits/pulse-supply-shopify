@@ -9,14 +9,8 @@
     {% # Custom Inter Font CSS %}
     {{ 'inter-font.css' | asset_url | stylesheet_tag }}
 
-    {% # Inlined CSS Variables %}
-    {% render 'css-variables' %}
-
     {% # Tailwind CSS v4 CDN %}
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,aspect-ratio,line-clamp" defer></script>
-
-    {% # Load and preload the critical CSS %}
-    {{ 'critical.css' | asset_url | stylesheet_tag: preload: true }}
 
     {% # Social, title, etc. %}
     {% render 'meta-tags' %}

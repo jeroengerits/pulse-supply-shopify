@@ -1,66 +1,41 @@
-<header class="flex items-center justify-between h-24">
-  <a href="/" class="flex flex-col gap-1">
-    <span class="text-3xl font-semibold leading-none lowercase">
-      pulse
-    </span>
-    <span class="text-lg text-gray-500/75 leading-none lowercase tracking-tighter">
-      pocket perfumes
-    </span>
-  </a>
-
-  <div class="header__menu">
-    {% for link in section.settings.menu.links %}
-      {{ link.title | link_to: link.url }}
-    {% endfor %}
-  </div>
-
-  <div class="header__icons">
-    {% if shop.customer_accounts_enabled %}
-      {{ 'icon-account.svg' | inline_asset_content | link_to: routes.account_url }}
-    {% endif %}
-
-    <a href="{{ routes.cart_url }}">
-      {% if cart.item_count > 0 %}
-        <sup>{{ cart.item_count }}</sup>
+<header>
+  <div class="flex items-center justify-between p-6">
+    <div class="w-full ">
+      <a href="{{ routes.root_url }}" class="inline-flex flex-col gap-1 outline-none font-inter outline-none focus:ring-2 rounded-lg p-1 ring-black/50">
+        <span class="text-3xl font-medium leading-none lowercase">
+          pulse
+        </span>
+        <span class="text-md text-black/50 leading-none lowercase">
+          pocket perfumes
+        </span>
+      </a>
+    </div>
+    <div class=" flex items-center gap-3 mr-2">
+      {% if shop.customer_accounts_enabled %}
+        <a href="{{ routes.account_url }}" class="text-black/50 hover:text-black/75 transition-all relative outline-none focus:ring-2 ring-black/50 rounded-lg p-1">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+          </svg>
+        </a>
       {% endif %}
+      <a href="{{ routes.cart_url }}" class="text-black/50 hover:text-black/75 transition-all relative outline-none focus:ring-2 ring-black/50 rounded-lg p-1">
+        {% if cart.item_count > 0 %}
+          <sup class="absolute -top-1 -right-1 bg-red-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-semibold">
+            {{ cart.item_count }}
+          </sup>
+        {% endif %}
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-7">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 0 0-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 0 0-16.536-1.84M7.5 14.25 5.106 5.272M6 20.25a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Zm12.75 0a.75.75 0 1 1-1.5 0 .75.75 0 0 1 1.5 0Z" />
+        </svg>
+      </a>
 
-      {{ 'icon-cart.svg' | inline_asset_content }}
-    </a>
+    </div>
   </div>
 </header>
-
-{% stylesheet %}
-  
-  header a {
-    position: relative;
-    text-decoration: none;
-    color: var(--color-foreground);
-  }
-  header a sup {
-    position: absolute;
-    left: 100%;
-    overflow: hidden;
-    max-width: var(--page-margin);
-  }
-  header svg {
-    width: 2rem;
-  }
-  header .header__menu,
-  header .header__icons {
-    display: flex;
-    gap: 1rem;
-  }
-{% endstylesheet %}
-
 {% schema %}
 {
   "name": "t:general.header",
-  "settings": [
-    {
-      "type": "link_list",
-      "id": "menu",
-      "label": "t:labels.menu"
-    }
-  ]
+  "settings": []
 }
 {% endschema %}
+
