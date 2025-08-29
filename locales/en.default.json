@@ -40,7 +40,22 @@
     "title": "Collections"
   },
   "general": {
-    "collection": "Collection"
+    "collection": "Collection",
+    "header": {
+      "brand_name": "pulse",
+      "brand_tagline": "pocket perfumes",
+      "homepage": "Go to homepage",
+      "navigation": "Main navigation",
+      "account": "Account",
+      "cart": "Shopping cart",
+      "cart_items_count": "Cart contains",
+      "cart_items": "items",
+      "brand_settings": "Brand Settings",
+      "show_tagline": "Show brand tagline",
+      "navigation_settings": "Navigation Settings",
+      "show_accounts": "Show customer accounts",
+      "show_accounts_info": "Display account link in header"
+    }
   },
   "gift_card": {
     "add_to_apple_wallet": "Add to Apple Wallet",
