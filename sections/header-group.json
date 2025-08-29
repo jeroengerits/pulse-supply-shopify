@@ -11,7 +11,7 @@
   "type": "header",
   "name": "t:general.header",
   "sections": {
-    "header": {
+    "navigation": {
       "type": "header",
       "settings": {
         "show_account_link": true,
